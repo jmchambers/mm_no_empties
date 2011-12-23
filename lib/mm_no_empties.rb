@@ -16,7 +16,7 @@ module MmNoEmpties
         else
           keys.select do |name, key|
             val = self[key.name]
-            key.type == ObjectId or
+            #key.type == ObjectId or   # this is in the original :attributes implementation, but is seems safe to remove it as 'belongs_to: nil' if it's missing
             not (val.nil? or (val.respond_to?(:empty?) and val.empty?))
           end
         end

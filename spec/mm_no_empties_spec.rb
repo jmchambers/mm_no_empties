@@ -3,11 +3,19 @@ require File.expand_path('../../lib/mm_no_empties', __FILE__)
 describe MmNoEmpties do
   
   before(:all) do    
+    class Company
+      include MongoMapper::Document
+      many :groups
+    end
+    
     class Group
       include MongoMapper::Document
       plugin  MmNoEmpties
       
       many :people, :class_name => 'Person'
+      belongs_to :company
+      
+      key  :motto,  String
       
       key  :names,  Array
       key  :counts, Hash
@@ -35,8 +43,12 @@ describe MmNoEmpties do
     @group.attributes.keys.should_not include('names', 'counts', 'tags')
   end
   
+  it "should not include nil values in 'attributes'" do
+    @group.attributes.keys.should_not include('motto')
+  end
+  
   it "should not include unused many associations in attributes" do
-    @group.attributes.keys.should_not include('people')
+    @group.attributes.keys.should_not include('people', 'company_id')
   end
   
   it "should restore empty fields when loading from the database" do
