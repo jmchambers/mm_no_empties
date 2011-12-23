@@ -2,7 +2,7 @@
 mm_no_empties
 ============
 
-Models that use this plugin do not persist empty Arrays, Hashes or Sets
+Models that use this plugin do not persist empty Arrays, Hashes or Sets. Nil values are also excluded as per standard MM behaviour.
 
 Requirements
 ============
@@ -28,6 +28,10 @@ class Group
   plugin  MmNoEmpties
   
   many :people, :class_name => 'Person'
+  
+  key  :names,  Array
+  key  :counts, Hash
+  key  :tags,   Set
 end
 ```
 
