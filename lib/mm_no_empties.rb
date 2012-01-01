@@ -38,7 +38,7 @@ module MmNoEmpties
             if include_all
               attrs[association.name] = val
             else
-              attrs[association.name] = val unless val.empty?
+              attrs[association.name] = val unless val.nil? or (val.is_a?(Array) and val.empty?)
             end
             
           end

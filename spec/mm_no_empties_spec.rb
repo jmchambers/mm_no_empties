@@ -13,6 +13,7 @@ describe MmNoEmpties do
       plugin  MmNoEmpties
       
       many :people, :class_name => 'Person'
+      one  :owner,  :class_name => 'Person'
       belongs_to :company
       
       key  :motto,  String
@@ -48,7 +49,7 @@ describe MmNoEmpties do
   end
   
   it "should not include unused many associations in attributes" do
-    @group.attributes.keys.should_not include('people', 'company_id')
+    @group.attributes.keys.should_not include('people', 'owner', 'company_id')
   end
   
   it "should restore empty fields when loading from the database" do
